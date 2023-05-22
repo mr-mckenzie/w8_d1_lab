@@ -5,11 +5,11 @@ import ArtDisplay from '../components/ArtDisplay';
 
 const ArtContainer = () => {
 
-    const [arts, setArts] = useState([])
+    const [art, setArt] = useState([])
     const [clickedArt, setClickArt] = useState(null)
     const [clickedArtInfo, setClickedArtInfo] = useState(null)
     const [page, setPage] = useState(1)
-    const [searchString, setSearchString] = useState("")
+    const [query, setQuery] = useState("")
     const [category, setCategory] = useState("")
     
 
@@ -26,26 +26,34 @@ const ArtContainer = () => {
     };
 
    
-    const getArt = function (yourSearch, category, pageInit) {
-        setArts([])
-        setCategory(category)
-        setSearchString(yourSearch)
-        // setPage(pageInit)
-        const url = `https://api.artic.edu/api/v1/artworks/search?${category}=${yourSearch}&page=${pageInit}&limit=10`
+    const getArt = function (yourSearch, category, pageInput) {
+
+        //setArt([])
+        const url = `https://api.artic.edu/api/v1/artworks/search?${category}=${yourSearch}&page=${pageInput}&limit=15`
+        console.log("url:", url)
         fetch(url)
             .then(res => res.json())
-            .then(artsData => setArts(artsData.data))
+            .then(artData => setArt(artData.data))
     }
 
-    const changePage = (pageChanged) => {
-        setPage(pageChanged)
-        getArt(searchString, category, page)
-    } 
+    const changePage = (plusMinus, page) => {
+
+        let newPage = page
+
+        if (plusMinus === true) {
+            newPage++
+        } else {
+            newPage --
+        }
+        getArt(query, category, newPage)
+        setPage(newPage)
+    }
+
 
     return (
         <>
-            <ArtSearch getArt={getArt} setPage={setPage} page={page}/>
-            <SearchList arts={arts} clickedArtWork={clickedArtWork} changePage={changePage} page={page}/>
+            <ArtSearch getArt={getArt} setPage={setPage} setQuery={setQuery} setCategory={setCategory} query={query} category={category}/>
+            <SearchList arts={art} clickedArtWork={clickedArtWork} changePage={changePage} page={page}/>
             {clickedArt && clickedArtInfo ? <ArtDisplay artWork={clickedArt} artWorkInfo={clickedArtInfo} /> : null}
 
         </>

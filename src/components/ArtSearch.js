@@ -1,17 +1,17 @@
 import { useState } from "react"
 
-const ArtSearch = ({ getArt, setPage, page }) => {
+const ArtSearch = ({ getArt, setPage, setQuery, setCategory, query, category}) => {
 
-    const [query, setQuery] = useState("");
+    //const [query, setQuery] = useState("");
 
-    const [category, setCategory] = useState("")
+    //const [category, setCategory] = useState("")
 
     const handleSelectChange = (event) => {
-        setCategory(event.target.value)
+        setCategory((event.target.value).toLowerCase())
     }
 
     const handleQueryChange = (event) => {
-        setQuery(event.target.value)
+        setQuery((event.target.value).toLowerCase())
     };
 
     const handleSubmit = (event) => {
@@ -19,7 +19,7 @@ const ArtSearch = ({ getArt, setPage, page }) => {
         // newSearch(query);
         setPage(1)
         if (query && category) {
-            getArt(query.toLowerCase(), category, page)
+            getArt(query.toLowerCase(), category, 1)
             // setPage(1)
         }
 
@@ -32,10 +32,10 @@ const ArtSearch = ({ getArt, setPage, page }) => {
         <>
             <h2>Search for an art work</h2>
             <form onSubmit={handleSubmit}>
-            <label>
+            <label htmlFor="category">
                 Choose a category:
             </label>
-            <select onChange={handleSelectChange} required>
+            <select id ="category" onChange={handleSelectChange} required>
                 <option hidden value="">Categories</option>
                 <option value="q">Any</option>
                 <option value="query[term][artist_title]">Artist</option>
@@ -44,7 +44,7 @@ const ArtSearch = ({ getArt, setPage, page }) => {
             </select>
                 <label>
                     Enter a subject:
-                    <input type="text" value={query} onChange={handleQueryChange} required/>
+                    <input id="search" type="text" value={query} onChange={handleQueryChange} required/>
                 </label>
                 <input type="submit" value="search" />
             </form>

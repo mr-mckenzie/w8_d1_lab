@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 
 const SearchList = ({ arts, clickedArtWork, changePage, page}) => {
 
+    //console.log("arts:", arts)
+
 
     const listComponents = arts.map((pieceArt) => {
 
@@ -18,11 +20,14 @@ const SearchList = ({ arts, clickedArtWork, changePage, page}) => {
             <ul>
                 {listComponents}
             </ul>
-            <div>
-            { (page > 1) ? <button onClick={() => changePage((pageNumber) => pageNumber-1)}>Previous</button> : null}
+            { (arts.length > 1) ? (
+                <div>
+            {  (page > 1) ? <button onClick={() => changePage(false, page)}>Previous</button> : null}
             <label>Page {page} </label>
-            <button onClick={() => changePage((pageNumber) => pageNumber+1)}>Next</button>
-            </div>
+            <button onClick={(event) => changePage(true, page)}>Next</button>
+            </div>)
+            :
+            null}
         </>
     );
 };
