@@ -1,13 +1,7 @@
 
 const ArtDisplay = ({ artWork, artWorkInfo }) => {
 
-    // const getArtWorkData = function (artwork) {
-    //     const url = artwork.api_link
-    //     console.log(url)
-    //     fetch(url)
-    //         .then(res => res.json())
-    //         .then(artsData => setArts(artsData.data))
-    // }
+
 
 
     return (
