@@ -30,20 +30,21 @@ const ArtSearch = ({ getArt, setPage, setQuery, setCategory, query, category}) =
 
     return (
         <>
-            <h2>Search for an art work</h2>
+            <h2>Search for Art</h2>
             <form onSubmit={handleSubmit}>
             <label htmlFor="category">
                 Choose a category:
             </label>
             <select id ="category" onChange={handleSelectChange} required>
-                <option hidden value="">Categories</option>
                 <option value="q">Any</option>
                 <option value="query[term][artist_title]">Artist</option>
                 <option value="query[term][subject_titles]">Subject</option>
                 <option value="query[term][title]">Title</option>
+                <option value="query[term][style_titles]">Style</option>
+                <option value="query[term][theme_titles]">Theme</option>
             </select>
                 <label>
-                    Enter a subject:
+                    Enter search query:
                     <input id="search" type="text" value={query} onChange={handleQueryChange} required/>
                 </label>
                 <input type="submit" value="search" />

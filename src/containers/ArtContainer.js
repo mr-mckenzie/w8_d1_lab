@@ -11,7 +11,7 @@ const ArtContainer = () => {
     const [page, setPage] = useState(1)
     const [query, setQuery] = useState("")
     const [category, setCategory] = useState("")
-    
+    const [colour, setColour] = useState("white")
 
 
     const getArtWorkInfo = function (clickedArtUrl) {
@@ -28,7 +28,6 @@ const ArtContainer = () => {
    
     const getArt = function (yourSearch, category, pageInput) {
 
-        //setArt([])
         const url = `https://api.artic.edu/api/v1/artworks/search?${category}=${yourSearch}&page=${pageInput}&limit=15`
         console.log("url:", url)
         fetch(url)
@@ -49,20 +48,27 @@ const ArtContainer = () => {
         setPage(newPage)
     }
 
+    // const colourBoxes = colourArray.map((element) => {
+    //     return (
+    //         element
+    //     )
+    // })
+
 
     return (
-        <>
-            <ArtSearch getArt={getArt} setPage={setPage} setQuery={setQuery} setCategory={setCategory} query={query} category={category}/>
-            <SearchList arts={art} clickedArtWork={clickedArtWork} changePage={changePage} page={page}/>
-            {clickedArt && clickedArtInfo ? <ArtDisplay artWork={clickedArt} artWorkInfo={clickedArtInfo} /> : null}
-
-        </>
+        <main style={{backgroundColor: colour}}>
+            <h1>Find a Masterpiece</h1>
+            <div className='flex-box'>
+                <div>
+                <ArtSearch getArt={getArt} setPage={setPage} setQuery={setQuery} setCategory={setCategory} query={query} category={category}/>
+                <SearchList arts={art} clickedArtWork={clickedArtWork} changePage={changePage} page={page}/>
+                </div>
+            {clickedArt && clickedArtInfo ? <ArtDisplay artWork={clickedArt} artWorkInfo={clickedArtInfo} setColour={setColour}/> : null}
+            {/* <div className='colour-square-container'>{colourBoxes}</div> */}
+            </div>
+        </main>
     );
 
 };
 
 export default ArtContainer;
-
- // `https://api.artic.edu/api/v1/artworks/search?q=${yourSearch}?page=1&limit=100`
-    // https://api.artic.edu/api/v1/artworks/search?query[term][artist_title]=${yourSearch}&limit=100
-    // const url = `https://api.artic.edu/api/v1/artworks/search?${category}=${yourSearch}&page=2&limit=10`
