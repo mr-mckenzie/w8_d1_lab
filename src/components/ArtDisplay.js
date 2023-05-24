@@ -1,6 +1,17 @@
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 
-const ArtDisplay = ({ artWork, artWorkInfo, setColour}) => {
+const ArtDisplay = ({setArtworkId, artWorkInfo, setColour}) => {
 
+    const {id} = useParams()
+    setArtworkId(id)
+    
+   //const {isLoading, artWork } = useGetArtDisplay
+
+    if (!artWorkInfo) {
+        return <p>Please wait while our gallery curator fetches the artwork</p>
+    } else {
+    
     let colour 
     if (artWorkInfo.color) {
         colour = artWorkInfo.color }
@@ -13,19 +24,20 @@ const ArtDisplay = ({ artWork, artWorkInfo, setColour}) => {
     const  styleString = `hsl(${colour.h} ${colour.s}% ${colour.l}%)`
     const complementaryColour = `hsl(${colour.h+180} ${colour.s}% ${colour.l}%)`
 
-    setColour(complementaryColour)
+    setColour(colour)
 
     return (
         <article className="art-box" style={{backgroundColor: styleString}}>
-            <h2>{artWork.title}</h2>
+            <h2>{artWorkInfo.title}</h2>
             <h3>{artWorkInfo.artist_title}</h3>
             <p>Medium: {artWorkInfo.medium_display}</p>
             <p>Date: {artWorkInfo.date_display}</p>
             <p>Place of Origin: {artWorkInfo.place_of_origin}</p>
             {artWorkInfo.style_title ? <p>Style: {artWorkInfo.style_titles.join(", ")}</p> : null}
-            <img src={`https://www.artic.edu/iiif/2/${artWorkInfo.image_id}/full/843,/0/default.jpg`} style={{width: "40%"}} />
+            <img src={`https://www.artic.edu/iiif/2/${artWorkInfo.image_id}/full/843,/0/default.jpg`} />
         </article>
     );
+    }
 };
 
 export default ArtDisplay;

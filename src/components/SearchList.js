@@ -2,15 +2,15 @@ import ListItem from "./ListItem";
 import React, { useState } from 'react';
 
 
-const SearchList = ({ arts, clickedArtWork, changePage, page}) => {
+const SearchList = ({ artResults, selectArtwork, changePage, page}) => {
 
     //console.log("arts:", arts)
 
 
-    const listComponents = arts.map((pieceArt) => {
+    const listComponents = artResults.map((artwork) => {
 
         return (
-            <ListItem key={pieceArt.id} pieceArt={pieceArt} clickedArtWork={clickedArtWork}/>
+            <ListItem key={artwork.id} artwork={artwork} selectArtwork={selectArtwork}/>
         );
     });
 
@@ -20,7 +20,7 @@ const SearchList = ({ arts, clickedArtWork, changePage, page}) => {
             <ul>
                 {listComponents}
             </ul>
-            { (arts.length > 1) ? (
+            { (artResults.length > 1) ? (
                 <div>
             {  (page > 1) ? <button onClick={() => changePage(false, page)}>Previous</button> : null}
             <label>Page {page} </label>

@@ -1,10 +1,6 @@
 import { useState } from "react"
 
-const ArtSearch = ({ getArt, setPage, setQuery, setCategory, query, category}) => {
-
-    //const [query, setQuery] = useState("");
-
-    //const [category, setCategory] = useState("")
+const ArtSearch = ({getArt, setPage, page, setQuery, setCategory, query, category}) => {
 
     const handleSelectChange = (event) => {
         setCategory((event.target.value).toLowerCase())
@@ -16,17 +12,13 @@ const ArtSearch = ({ getArt, setPage, setQuery, setCategory, query, category}) =
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // newSearch(query);
-        setPage(1)
-        if (query && category) {
-            getArt(query.toLowerCase(), category, 1)
-            // setPage(1)
+        if (page !== 1){
+            setPage(1)
         }
-
-        // setQuery("");
+        if (query && category) {
+            getArt(query, category, page)
+        }
     };
-
-
 
     return (
         <>

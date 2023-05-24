@@ -1,70 +1,82 @@
-import React, { useState } from 'react';
 import ArtSearch from '../components/ArtSearch';
 import SearchList from '../components/SearchList';
-import ArtDisplay from '../components/ArtDisplay';
 
-const ArtContainer = () => {
+const ArtContainer = ({artResults, getArt, selectArtwork, changePage, category, setCategory, query, setQuery, page, setPage,}) => {
 
-    const [art, setArt] = useState([])
-    const [clickedArt, setClickArt] = useState(null)
-    const [clickedArtInfo, setClickedArtInfo] = useState(null)
-    const [page, setPage] = useState(1)
-    const [query, setQuery] = useState("")
-    const [category, setCategory] = useState("")
-    const [colour, setColour] = useState("white")
+            // const [art, setArt] = useState([])
+            // const [clickedArt, setClickArt] = useState(null)
+            // const [clickedArtInfo, setClickedArtInfo] = useState(null)
+            // const [page, setPage] = useState(1)
+            // const [query, setQuery] = useState("")
+            // const [category, setCategory] = useState("")
+            // const [colour, setColour] = useState("grey")
+
+            // //testing out use effect - runs when 'page' state changes
+            // useEffect(() => {
+            //     console.log(`Page (${page}) has changed`)
+            // }, [page])
+            
+            // useEffect(() => {
+            //     console.log(`Query (${query}) has changed`)
+            // }, [query])
+
+            // useEffect(() => {
+            //     console.log(`Category (${category}) has changed`)
+            // }, [category])
 
 
-    const getArtWorkInfo = function (clickedArtUrl) {
-        fetch(clickedArtUrl)
-            .then(res => res.json())
-            .then(artsData => setClickedArtInfo(artsData.data))
-    }
+            // const getArtWorkInfo = function (clickedArtUrl) {
+            //     fetch(clickedArtUrl)
+            //         .then(res => res.json())
+            //         .then(artsData => setClickedArtInfo(artsData.data))
+            // }
 
-    const clickedArtWork = (artWork) => {
-        setClickArt(artWork);
-        getArtWorkInfo(artWork.api_link)
-    };
+            // const runFetch = (artworkId) => {
+            //     const url = `https://api.artic.edu/api/v1/artworks/${artworkId}`
+            //     console.log(url)
+            //     getArtWorkInfo(url)
+            // }
 
-   
-    const getArt = function (yourSearch, category, pageInput) {
+            // const clickedArtWork = (artWork) => {
+            //     setClickArt(artWork)
+            //     getArtWorkInfo(artWork.api_link)
+            // }
 
-        const url = `https://api.artic.edu/api/v1/artworks/search?${category}=${yourSearch}&page=${pageInput}&limit=15`
-        console.log("url:", url)
-        fetch(url)
-            .then(res => res.json())
-            .then(artData => setArt(artData.data))
-    }
+        
+            // const getArt = function (yourSearch, category, pageInput) {
 
-    const changePage = (plusMinus, page) => {
+            //     const url = `https://api.artic.edu/api/v1/artworks/search?${category}=${yourSearch}&page=${pageInput}&limit=15`
+            //     console.log("url:", url)
+            //     fetch(url)
+            //         .then(res => res.json())
+            //         .then(artData => setArt(artData.data))
+            // }
 
-        let newPage = page
+            // const changePage = (plusMinus, page) => {
 
-        if (plusMinus === true) {
-            newPage++
-        } else {
-            newPage --
-        }
-        getArt(query, category, newPage)
-        setPage(newPage)
-    }
+            //     let newPage = page
 
-    // const colourBoxes = colourArray.map((element) => {
-    //     return (
-    //         element
-    //     )
-    // })
+            //     if (plusMinus === true) {
+            //         newPage++
+            //     } else {
+            //         newPage --
+            //     }
+            //     getArt(query, category, newPage)
+            //     setPage(newPage)
+            // }
+
+            // // const colourBoxes = colourArray.map((element) => {
+            // //     return (
+            // //         element
+            // //     )
+            // // })
 
 
     return (
-        <main style={{backgroundColor: colour}}>
-            <h1>Find a Masterpiece</h1>
+        <main>
             <div className='flex-box'>
-                <div>
-                <ArtSearch getArt={getArt} setPage={setPage} setQuery={setQuery} setCategory={setCategory} query={query} category={category}/>
-                <SearchList arts={art} clickedArtWork={clickedArtWork} changePage={changePage} page={page}/>
-                </div>
-            {clickedArt && clickedArtInfo ? <ArtDisplay artWork={clickedArt} artWorkInfo={clickedArtInfo} setColour={setColour}/> : null}
-            {/* <div className='colour-square-container'>{colourBoxes}</div> */}
+                <ArtSearch getArt={getArt} page={page} setPage={setPage} query={query} setQuery={setQuery} category={category} setCategory={setCategory}/>
+                <SearchList artResults={artResults} selectArtwork={selectArtwork} changePage={changePage} page={page}/>
             </div>
         </main>
     );
