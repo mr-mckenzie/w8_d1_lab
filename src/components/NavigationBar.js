@@ -1,11 +1,20 @@
 import {Link} from  'react-router-dom' 
+import styled from 'styled-components'
 
 const NavigationBar = ({colour}) => {
 
+    const NavBar = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 3em;
+    align-items: center;
+    `
+
     console.log("NAV BAR COLOUR: ", colour)
     let navBarColour = {...colour}
-    if (!colour) {
-         navBarColour = {h: 0, s: 0, l:95}
+    if (!navBarColour) {
+         navBarColour = {h: 0, s: 0, l:80}
         } 
     //console.log("navBarColour:", navBarColour, navBarColour.h, navBarColour.s, navBarColour.l)
     const styleString = `hsl(${navBarColour.h} ${navBarColour.s}% ${navBarColour.l}%)`
@@ -13,18 +22,14 @@ const NavigationBar = ({colour}) => {
 
 
     return (
-        <ul style={{backgroundColor: styleString, transition: "background-color 2s" }}>
-            <li>
-                <Link to="/"> Home </Link>
-            </li>
-            <li>
-                <Link to="../search"> Search </Link>
-            </li>
-        {/* TODO save favourite art... */}
-            {/* <li> */}
-                {/* Favourite Art... */}
-            {/* </li> */}
-        </ul>
+        <NavBar>
+
+                    <Link to="/"> Home </Link>
+
+                    <Link to="../search"> Search </Link>
+            {/* TODO save favourite art... */}
+                    {/* Favourite Art... */}
+        </NavBar>
     )
 }
 

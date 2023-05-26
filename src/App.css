@@ -1,7 +1,11 @@
 .App {
   text-align: center;
   transition: background-color 2s;
+  height: 100%;
+  font-family: "Goudy Bookletter 1911", sans-serif;
 }
+
+/* //For example: Open Sans, Fira Sans, Lucida Sans, Lucida Sans Unicode, Trebuchet MS, Liberation Sans, Nimbus Sans L, sans-serif. */
 
 .App-logo {
   height: 40vmin;
