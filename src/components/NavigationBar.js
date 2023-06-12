@@ -23,12 +23,11 @@ const NavigationBar = ({colour}) => {
 
     return (
         <NavBar>
-
-                    <Link to="/"> Home </Link>
-
-                    <Link to="../search"> Search </Link>
+            <p>Virtual Gallery</p>
+            <Link to="/"> Home </Link>
+            <Link to="../search"> Search </Link>
             {/* TODO save favourite art... */}
-                    {/* Favourite Art... */}
+            {/* Favourite Art... */}
         </NavBar>
     )
 }

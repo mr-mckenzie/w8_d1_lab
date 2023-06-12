@@ -1,5 +1,3 @@
-import { useState } from "react"
-
 const ArtSearch = ({getArt, setPage, page, setQuery, setCategory, query, category}) => {
 
     const handleSelectChange = (event) => {
@@ -22,27 +20,26 @@ const ArtSearch = ({getArt, setPage, page, setQuery, setCategory, query, categor
 
     return (
         <>
-            <h2>Search for Art</h2>
             <form onSubmit={handleSubmit}>
-            <label htmlFor="category">
-                Choose a category:
-            </label>
-            <select id ="category" onChange={handleSelectChange} required>
-                <option value="q">Any</option>
-                <option value="query[term][artist_title]">Artist</option>
-                <option value="query[term][subject_titles]">Subject</option>
-                <option value="query[term][title]">Title</option>
-                <option value="query[term][style_titles]">Style</option>
-                <option value="query[term][theme_titles]">Theme</option>
-            </select>
-                <label>
-                    Enter search query:
+                <label htmlFor="category">
+                    Choose a category:
+                    <select id ="category" onChange={handleSelectChange} required>
+                        <option value="q">Any</option>
+                        <option value="query[term][artist_title]">Artist</option>
+                        <option value="query[term][subject_titles]">Subject</option>
+                        <option value="query[term][title]">Title</option>
+                        <option value="query[term][style_titles]">Style</option>
+                        <option value="query[term][theme_titles]">Theme</option>
+                    </select>
+                </label>
+                <label>Enter your search query:
                     <input id="search" type="text" value={query} onChange={handleQueryChange} required/>
                 </label>
-                <input type="submit" value="search" />
+                <input type="submit" value="Search" />
             </form>
         </>
     );
+
 };
 
 export default ArtSearch;

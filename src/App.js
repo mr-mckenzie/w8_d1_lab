@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Home from './components/Home'
 import NavigationBar from './components/NavigationBar'
 import ArtContainer from "./containers/ArtContainer";
 import ArtDisplay from './components/ArtDisplay';
-
+import './App.css';
 
 function App() {
 
@@ -24,31 +24,31 @@ function App() {
   const [colour, setColour] = useState(null)
 
   //testing out use effect - runs when 'page' state changes
-  useEffect(() => {
-      console.log(`UseEffect Test: ART RESULTS  (${artResults}) has changed`)
-  }, [artResults])
-  useEffect(() => {
-      console.log(`UseEffect Test: ARTWORK ID (${artworkId}) has changed`)
-  }, [artworkId])
-  useEffect(() => {
-      console.log(`UseEffect Test: ARTWORK OBJ (${artworkObj}) has changed`)
-  }, [artworkObj])
-  useEffect(() => {
-      console.log(`UseEffect Test: PAGE (${page}) has changed`)
-  }, [page])
-  useEffect(() => {
-      console.log(`UseEffect Test: QUERY (${query}) has changed`)
-  }, [query])
-  useEffect(() => {
-      console.log(`UseEffect Test: CATEGORY (${category}) has changed`)
-  }, [category])
-  // let styleString = "hsl(50 50% 50%)"
-  // let complementaryColour = "hsl(25 25% 50%)"
-  useEffect(() => {
-      console.log(`UseEffect Test: COLOUR (${colour}) has changed`)
-      // styleString = `hsl(${colour.h} ${colour.s}% ${colour.l}%)`
-      // complementaryColour = `hsl(${colour.h+180} ${colour.s}% ${colour.l}%)`
-  }, [colour])
+  // useEffect(() => {
+  //     console.log(`UseEffect Test: ART RESULTS  (${artResults}) has changed`)
+  // }, [artResults])
+  // useEffect(() => {
+  //     console.log(`UseEffect Test: ARTWORK ID (${artworkId}) has changed`)
+  // }, [artworkId])
+  // useEffect(() => {
+  //     console.log(`UseEffect Test: ARTWORK OBJ (${artworkObj}) has changed`)
+  // }, [artworkObj])
+  // useEffect(() => {
+  //     console.log(`UseEffect Test: PAGE (${page}) has changed`)
+  // }, [page])
+  // useEffect(() => {
+  //     console.log(`UseEffect Test: QUERY (${query}) has changed`)
+  // }, [query])
+  // useEffect(() => {
+  //     console.log(`UseEffect Test: CATEGORY (${category}) has changed`)
+  // }, [category])
+  //     // let styleString = "hsl(50 50% 50%)"
+  //     // let complementaryColour = "hsl(25 25% 50%)"
+  // useEffect(() => {
+  //     console.log(`UseEffect Test: COLOUR (${colour}) has changed`)
+  //         // styleString = `hsl(${colour.h} ${colour.s}% ${colour.l}%)`
+  //         // complementaryColour = `hsl(${colour.h+180} ${colour.s}% ${colour.l}%)`
+  // }, [colour])
 
 
   //when id changes run the getArtwork function
@@ -69,7 +69,7 @@ function App() {
 
     //GET ART
     const getArt = function (searchQuery, searchCategory, pagination) {
-        const url = `https://api.artic.edu/api/v1/artworks/search?${searchCategory}=${searchQuery}&page=${pagination}&limit=20`
+        const url = `https://api.artic.edu/api/v1/artworks/search?${searchCategory}=${searchQuery}&page=${pagination}&limit=50`
         console.log("url:", url)
         fetch(url)
             .then(res => res.json())
@@ -88,6 +88,20 @@ function App() {
         setPage(newPage)
     }
 
+    //Get the id of the next/previous artwork in the search list.
+    const nextId = (moveForward) => {
+      let nextArtworkId = ""
+      const idArray = artResults.map((artwork) => artwork.id)
+      const indexOfCurrentId = idArray.indexOf(Number(artworkId))
+
+      if (moveForward === true) {
+        nextArtworkId = idArray[(indexOfCurrentId + 1)]
+      } else {
+        nextArtworkId = idArray[(indexOfCurrentId - 1)]
+      }
+      return nextArtworkId
+    }
+
 
   return (
     <div className="App">
@@ -96,7 +110,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/search" element={<ArtContainer artResults={artResults} getArt={getArt} selectArtwork={selectArtwork} changePage={changePage} category={category} setCategory={setCategory} query={query} setQuery={setQuery} page={page} setPage={setPage}/>}/>
-          <Route path="/art/:id" element={<ArtDisplay setArtworkId={setArtworkId} artWorkInfo={artworkObj} setColour={setColour}/>} />
+          <Route path="/art/:id" element={<ArtDisplay setArtworkId={setArtworkId} artWorkInfo={artworkObj} setColour={setColour} nextId={nextId}/>} />
         </Routes>
       </Router>
     </div>
